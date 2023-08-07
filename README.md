@@ -1,6 +1,6 @@
 # Showcase squid 00: activity of 1.4M wallets
 
-This squid captures all Binance Smart Chain transactions involving accounts that interacted with the [Pancakeswap v2 Router](https://bscscan.com/address/0x10ed43c718714eb63d5aa57b78b54704e256024e) contract between blocks 28M and 30M, a total of about 1.4M accounts. The list of accounts is saved at `assets/allWallets`; it was also retrieved by an ad-hoc squid located at the `wallet-list-maker` folder. 
+This squid captures all Binance Smart Chain transactions involving accounts that interacted with the [Pancakeswap v2 Router](https://bscscan.com/address/0x10ed43c718714eb63d5aa57b78b54704e256024e) contract between blocks 28M and 30M, a total of about 1.4M addresses. The list of addresses is saved at `assets/allWallets`; it was retrieved by an ad-hoc squid located at the `wallet-list-maker` folder. 
 
 See more examples of requesting data with squids on the [showcase page](https://docs.subsquid.io/evm-indexing/configuration/showcase) of Subsquid documentation.
 
