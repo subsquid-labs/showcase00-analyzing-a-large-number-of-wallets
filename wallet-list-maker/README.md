@@ -4,6 +4,7 @@ An ad-hoc squid that saves addresses of all accounts that interacted with the [P
 
 Run with
 ```bash
+npm ci
 sqd up
 sqd process
 sqd down
