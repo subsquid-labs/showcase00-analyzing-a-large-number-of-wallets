@@ -1,0 +1,7 @@
+type Transaction @entity {
+  id: ID!
+  block: Int! @index
+  from: String! @index
+  to: String @index
+  txnHash: String! @index
+}
