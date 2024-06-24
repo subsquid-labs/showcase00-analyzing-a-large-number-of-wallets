@@ -1,4 +1,3 @@
-import {lookupArchive} from '@subsquid/archive-registry'
 import {
     BlockHeader,
     DataHandlerContext,
@@ -10,7 +9,7 @@ import {
 
 export const processor = new EvmBatchProcessor()
     .setDataSource({
-        archive: lookupArchive('binance'),
+        archive: 'https://v2.archive.subsquid.io/network/binance-mainnet',
     })
     .addTransaction({})
 
