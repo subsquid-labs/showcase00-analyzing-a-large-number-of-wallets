@@ -1,21 +1,26 @@
 import * as fs from 'fs'
+import {run} from '@subsquid/batch-processor'
+import {augmentBlock} from '@subsquid/evm-objects'
+import {createLogger} from '@subsquid/logger'
 import {TypeormDatabase} from '@subsquid/typeorm-store'
 import {Transaction} from './model'
-import {processor} from './processor'
+import {dataSource} from './processor'
+
+const log = createLogger('sqd:processor')
 
 // 1.44M wallets that interacted with Pancakeswap v2 Router
 // between blocks 28_000_000 and 30_000_000
 const wallets: Set<string> = loadWallets('./assets/allWallets')
-console.log(`loaded ${wallets.size} wallets`)
+log.info(`loaded ${wallets.size} wallets`)
 
-processor.run(new TypeormDatabase({supportHotBlocks: false}), async (ctx) => {
+run(dataSource, new TypeormDatabase({supportHotBlocks: true}), async (ctx) => {
     const transactions: Transaction[] = []
-    for (let block of ctx.blocks) {
+    for (let block of ctx.blocks.map(augmentBlock)) {
         for (let txn of block.transactions) {
             if (wallets.has(txn.from) || (txn.to && wallets.has(txn.to))) {
                 transactions.push(new Transaction({
                     id: txn.id,
-                    block: block.header.height,
+                    block: block.header.number,
                     from: txn.from,
                     to: txn.to,
                     txnHash: txn.hash

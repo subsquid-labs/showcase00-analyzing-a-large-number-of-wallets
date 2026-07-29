@@ -1,29 +1,22 @@
-import {lookupArchive} from '@subsquid/archive-registry'
-import {
-    BlockHeader,
-    DataHandlerContext,
-    EvmBatchProcessor,
-    EvmBatchProcessorFields,
-    Log as _Log,
-    Transaction as _Transaction,
-} from '@subsquid/evm-processor'
+import {DataSourceBuilder} from '@subsquid/evm-stream'
 
 export const PANCAKESWAP_ROUTER_V2 = '0x10ed43c718714eb63d5aa57b78b54704e256024e'
 
-export const processor = new EvmBatchProcessor()
-    .setDataSource({
-        archive: lookupArchive('binance'),
-    })
-    .addTransaction({
-        to: [PANCAKESWAP_ROUTER_V2],
-    })
+export const dataSource = new DataSourceBuilder()
+    .setPortal('https://portal.sqd.dev/datasets/binance-mainnet')
     .setBlockRange({
         from: 28_000_000,
         to: 30_000_000,
     })
-
-export type Fields = EvmBatchProcessorFields<typeof processor>
-export type Block = BlockHeader<Fields>
-export type Log = _Log<Fields>
-export type Transaction = _Transaction<Fields>
-export type ProcessorContext<Store> = DataHandlerContext<Store, Fields>
+    .setFields({
+        transaction: {
+            from: true,
+            to: true,
+        },
+    })
+    .addTransaction({
+        where: {
+            to: [PANCAKESWAP_ROUTER_V2],
+        },
+    })
+    .build()

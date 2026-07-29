@@ -17,7 +17,7 @@ sqd init showcase00 -t https://github.com/subsquid-labs/showcase00-analyzing-a-l
 cd showcase00
 
 # 2. Install dependencies
-npm ci
+npm i
 
 # 3. Start a Postgres database container and detach
 sqd up

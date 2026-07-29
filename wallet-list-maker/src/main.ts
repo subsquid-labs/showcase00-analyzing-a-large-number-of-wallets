@@ -1,10 +1,11 @@
 import * as fs from 'fs'
+import {run} from '@subsquid/batch-processor'
 import {TypeormDatabase} from '@subsquid/typeorm-store'
-import {processor, PANCAKESWAP_ROUTER_V2} from './processor'
+import {dataSource, PANCAKESWAP_ROUTER_V2} from './processor'
 
 const allWallets: Set<string> = new Set()
 
-processor.run(new TypeormDatabase({supportHotBlocks: false}), async (ctx) => {
+run(dataSource, new TypeormDatabase({supportHotBlocks: false}), async (ctx) => {
     for (let block of ctx.blocks) {
         for (let txn of block.transactions) {
             if (txn.to === PANCAKESWAP_ROUTER_V2) {
